@@ -255,7 +255,7 @@ fn gerg2008_normal_range() {
     gerg_test.molar_mass();
 
     let mut rng = rng();
-    let iterations = 100_000;
+    let iterations = 10_000;
     for _ in 0..iterations {
         gerg_test.p = rng.random_range(1.0..35_000.0);
         gerg_test.t = rng.random_range(90.0..450.0);

@@ -97,7 +97,8 @@ fn binary_mixtures() {
     }
 }
 
-//#[test]
+#[test]
+#[ignore]
 fn natural_gas_calculations() {
     let mut compositions: Vec<Composition> = Vec::new();
     let mut detail = Detail::new();
@@ -176,10 +177,10 @@ fn natural_gas_calculations() {
         gerg.d = d;
         gerg.p = gerg.pressure();
         gerg.properties();
-        // assert_float_relative_eq!(gerg.p / 1000.0, gerg_p, GERG_EPSILON);
-        // assert_float_relative_eq!(gerg.cv, gerg_cv, GERG_EPSILON);
-        // assert_float_relative_eq!(gerg.cp, gerg_cp, GERG_EPSILON);
-        // assert_float_relative_eq!(gerg.w, gerg_w, GERG_EPSILON);
+        assert_float_relative_eq!(gerg.p / 1000.0, gerg_p, GERG_EPSILON);
+        assert_float_relative_eq!(gerg.cv, gerg_cv, GERG_EPSILON);
+        assert_float_relative_eq!(gerg.cp, gerg_cp, GERG_EPSILON);
+        assert_float_relative_eq!(gerg.w, gerg_w, GERG_EPSILON);
 
         let scale_max = 0.50;
         println!("comp: {index}");
@@ -211,10 +212,10 @@ fn natural_gas_calculations() {
         detail.d = d;
         detail.p = detail.pressure();
         detail.properties();
-        // assert_float_relative_eq!(detail.p / 1000.0, detail_p, DETAIL_EPSILON);
-        // assert_float_relative_eq!(detail.cv, detail_cv, DETAIL_EPSILON);
-        // assert_float_relative_eq!(detail.cp, detail_cp, DETAIL_EPSILON);
-        // assert_float_relative_eq!(detail.w, detail_w, DETAIL_EPSILON);
+        assert_float_relative_eq!(detail.p / 1000.0, detail_p, DETAIL_EPSILON);
+        assert_float_relative_eq!(detail.cv, detail_cv, DETAIL_EPSILON);
+        assert_float_relative_eq!(detail.cp, detail_cp, DETAIL_EPSILON);
+        assert_float_relative_eq!(detail.w, detail_w, DETAIL_EPSILON);
 
         println!("detail:");
         println!(" p: {}", detail.p / 1000.0 - detail_p);

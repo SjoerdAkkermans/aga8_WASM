@@ -62,7 +62,7 @@ use crate::DensityError;
 /// // Compressibility factor
 /// assert!((1.175 - gerg_test.z).abs() < 1.0e-3);
 /// ```
-#[derive(Default)]
+#[derive(Default, Clone, Copy)]
 pub struct Gerg2008 {
     /// Temperature in K
     pub t: f64,
@@ -592,5 +592,57 @@ impl Gerg2008 {
             dcx = 1.0 / vcx;
         }
         (dcx, tcx)
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn clone_gerg() {
+        let mut detail = Gerg2008::new();
+        let mut gas_comp = Composition::default();
+        gas_comp.nitrogen = 1.0;
+
+        _ = detail.set_composition(&gas_comp);
+        detail.t = 273.15;
+        detail.p = 200.0;
+        _ = detail.density(0);
+        detail.properties();
+
+        let mut detail_clone = detail.clone();
+        detail_clone.p = 100.0;
+        _ = detail_clone.density(0);
+        detail_clone.properties();
+        assert!((detail_clone.t - 273.15).abs() < 0.000001);
+        assert!((detail_clone.p - 100.0).abs() <  0.000001);
+
+        let expected_density = 0.0446; // mol/l STP
+        assert!((detail_clone.d - expected_density).abs() < 0.001);
+    }
+
+    #[test]
+    fn copy_gerg() {
+        let mut detail = Gerg2008::new();
+        let mut gas_comp = Composition::default();
+        gas_comp.nitrogen = 1.0;
+
+        _ = detail.set_composition(&gas_comp);
+        detail.t = 273.15;
+        detail.p = 200.0;
+        _ = detail.density(0);
+        detail.properties();
+
+        let mut detail_copy = detail;
+        detail_copy.p = 100.0;
+        _ = detail_copy.density(0);
+        detail_copy.properties();
+        assert!((detail_copy.t - 273.15).abs() < 0.000001);
+        assert!((detail_copy.p - 100.0).abs() <  0.000001);
+
+        let expected_density = 0.0446; // mol/l STP
+        assert!((detail_copy.d - expected_density).abs() < 0.001);
     }
 }

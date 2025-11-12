@@ -6,7 +6,7 @@ use rand::{prelude::*, rng};
 use std::fs::OpenOptions;
 use std::io::{prelude::*, BufWriter};
 
-const COMP_FULL: Composition = Composition {
+const _COMP_FULL: Composition = Composition {
     methane: 0.778_24,
     nitrogen: 0.02,
     carbon_dioxide: 0.06,
@@ -30,7 +30,7 @@ const COMP_FULL: Composition = Composition {
     argon: 0.001,
 };
 
-const COMP_PARTIAL: Composition = Composition {
+const _COMP_PARTIAL: Composition = Composition {
     methane: 0.965,
     nitrogen: 0.003,
     carbon_dioxide: 0.006,
@@ -57,7 +57,7 @@ const COMP_PARTIAL: Composition = Composition {
 fn main() {
     let mut gerg_test: Gerg2008 = Gerg2008::new();
 
-    gerg_test.set_composition(&COMP_FULL).unwrap();
+    gerg_test.set_composition(&_COMP_PARTIAL).unwrap();
 
     gerg_test.molar_mass();
 
@@ -80,7 +80,7 @@ fn main() {
     writeln!(writer, "# Temperature, Pressure, MolarConsentration").unwrap();
 
     let mut rng = rng();
-    let iterations = 50_000;
+    let iterations = 250_000;
     for i in 0..iterations {
         if (i % 10_000) == 0 {
             writer.flush().unwrap();
@@ -88,9 +88,9 @@ fn main() {
             println!("{}% flush", i * 100 / iterations);
         }
 
-        gerg_test.p = rng.random_range(10.0..20_000.0);
-        gerg_test.t = rng.random_range(120.0..400.0);
-        let e = gerg_test.density(2);
+        gerg_test.p = rng.random_range(1.0..20_000.0);
+        gerg_test.t = rng.random_range(90.0..200.0);
+        let e = gerg_test.density(0);
         match e {
             Ok(_) | Err(DensityError::Ok) => {
                 writeln!(writer, "{}, {}, {}", gerg_test.t, gerg_test.p, gerg_test.d).unwrap()

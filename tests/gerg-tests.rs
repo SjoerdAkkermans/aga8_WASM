@@ -1,6 +1,6 @@
 use aga8::composition::Composition;
 use aga8::gerg2008::Gerg2008;
-use rand::prelude::*;
+use rand::{prelude::*, rng};
 
 const COMP_FULL: Composition = Composition {
     methane: 0.778_24,
@@ -193,11 +193,11 @@ fn gerg2008_normal_range() {
 
     gerg_test.molar_mass();
 
-    let mut rng = thread_rng();
+    let mut rng = rng();
     let iterations = 100_000;
     for _ in 0..iterations {
-        gerg_test.p = rng.gen_range(1.0..35_000.0);
-        gerg_test.t = rng.gen_range(90.0..450.0);
+        gerg_test.p = rng.random_range(1.0..35_000.0);
+        gerg_test.t = rng.random_range(90.0..450.0);
         let _ = gerg_test.density(0);
     }
 }

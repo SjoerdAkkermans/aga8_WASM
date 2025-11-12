@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use aga8::composition::Composition;
 use aga8::{gerg2008::Gerg2008, DensityError};
 use rand::{prelude::*, rng};
@@ -60,15 +62,17 @@ fn main() {
     gerg_test.molar_mass();
 
     let file = OpenOptions::new()
-        .append(true)
-        .create_new(true)
+        .write(true)
+        .create(true)
+        .truncate(true)
         .open("data.csv")
         .unwrap();
     let mut writer = BufWriter::new(file);
 
     let file_2 = OpenOptions::new()
-        .append(true)
+        .write(true)
         .create(true)
+        .truncate(true)
         .open("data_2.csv")
         .unwrap();
     let mut writer_2 = BufWriter::new(file_2);

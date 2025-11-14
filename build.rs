@@ -1,4 +1,4 @@
-use cbindgen::{Config, Language};
+use cbindgen::{Config, EnumConfig, Language};
 use std::env;
 use std::path::PathBuf;
 
@@ -17,6 +17,7 @@ fn main() {
         include_version: true,
         package_version: true,
         pragma_once: true,
+        enumeration: EnumConfig {prefix_with_name: true, ..Default::default()},
         ..Default::default()
     };
 

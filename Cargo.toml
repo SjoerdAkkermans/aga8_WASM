@@ -37,5 +37,7 @@ name = "benchmarks"
 harness = false
 
 [build-dependencies]
-winres = "0.1"
 cbindgen = "0.29.2"
+
+[target.'cfg(windows)'.build-dependencies]
+winres = "0.1"
